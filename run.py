@@ -21,10 +21,11 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 # Can access our love_sandwiches sheet
 # Using the open() method on our client object and passing it the spreadsheet
 SHEET = GSPREAD_CLIENT.open('love_sandwiches')
-# Define a new variable and using the worksheet method of the sheet, we can call our “sales” tab in the worksheet.  
+# Define a new variable and using the worksheet method of the sheet,
+# we can call our “sales” tab in the worksheet.  
 sales = SHEET.worksheet('sales')
-
+# Now let’s define a variable named  data, we’ll use the gspread method
+# get_all_values() to pull all the values from our sales worksheet.  
 data = sales.get_all_values()
 
 print(data)
-
