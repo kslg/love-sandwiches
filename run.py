@@ -78,13 +78,12 @@ def validate_data(values):
         return False
 
     return True
-
+"""
 # For this function to work, I need to pass it the data  to insert, so we’ll name this parameter data.  
 def update_sales_worksheet(data):
-    """
-    Update sales worksheet, add new row with the list data provided
-    """
-
+    
+    # Update sales worksheet, add new row with the list data provided
+    
     print("Updating sales worksheet...\n")
     # Need to access our sales  worksheet from our Google Sheet so we can add data to it.
     # Use the gspread worksheet() method to access our sales worksheet.  
@@ -95,9 +94,9 @@ def update_sales_worksheet(data):
 
 # For this function to work, I need to pass it the data  to insert, so we’ll name this parameter data.  
 def update_surplus_worksheet(data):
-    """
-    Update surplus worksheet, add new row with the list data provided
-    """
+    
+    # Update surplus worksheet, add new row with the list data provided
+    
     print("Updating surplus worksheet...\n")
     # Need to access our surplus worksheet from our Google Sheet so we can add data to it.
     # Use the gspread worksheet() method to access our surplus worksheet.  
@@ -106,6 +105,27 @@ def update_surplus_worksheet(data):
     # Adds the data to the worksheet
     surplus_worksheet.append_row(data)
     print("Surplus worksheet updated successfully.\n")
+"""
+
+def update_worksheet(data, worksheet):
+    """
+    Refactored function for both update functions (update_sales & update_surplus)
+    Going to  pass it our data to be inserted.  
+    But this time, I’ll create a second argument for  my function called worksheet, which is going to  
+    hold the name of the worksheet we want to update.
+    """
+    # print statement using a f-string to insert the worksheet name that we're updating into the print statement.
+    print(f"Updating {worksheet} worksheet...\n")
+    # We’ll name this variable worksheet_to_update.  
+    # And again we'll use our worksheet variable here  to choose which worksheet we want to access.
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    # append data parsed from the data variable
+    worksheet_to_update.append_row(data)
+    # print statement, again using  the f-string to insert our worksheet variable.
+    print(f"{worksheet} worksheet updated successfully\n")
+
+
+
 
 def calculate_surplus_data(sales_row):
     """
@@ -140,14 +160,16 @@ def main():
     # Using List Comprehension, converting the data into integer format.
     sales_data = [int(num) for num in data]
 
-    # Calling the "update_sales_worksheet" function.
-    update_sales_worksheet(sales_data)
+    # Calling the refactored "update_worksheet" function when passing sales data.
+    # and askng to update the "sales" worksheet
+    update_worksheet(sales_data, "sales")
     
-    # Calling the "calculate_surplus_data" function to calculate NEW surplus data
+    # Calling the "calculate_surplus_data" function to calculate NEW surplus data.
     new_surplus_data = calculate_surplus_data(sales_data)
 
-    # Calling the "update_surplus_worksheet" function.
-    update_surplus_worksheet(new_surplus_data)
+    # Calling the refactored "update_worksheet" function when passing surplus data
+    # and askng to update the "surplus" worksheet
+    update_worksheet(new_surplus_data, "surplus")
 
 print("Welcome to Love Sandwiches Data Automation.\n")
 main()
