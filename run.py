@@ -93,8 +93,8 @@ def update_sales_worksheet(data):
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully.\n")
 
-# For this function to work, I need to pass it the surplus_data  to insert, so we’ll name this parameter.  
-def update_surplus_worksheet(surplus_data):
+# For this function to work, I need to pass it the data  to insert, so we’ll name this parameter data.  
+def update_surplus_worksheet(data):
     """
     Update surplus worksheet, add new row with the list data provided
     """
@@ -103,8 +103,8 @@ def update_surplus_worksheet(surplus_data):
     # Use the gspread worksheet() method to access our surplus worksheet.  
     # The value we put in here relates to the name of our worksheet tab.
     surplus_worksheet = SHEET.worksheet("surplus")
-    # Gets the new surplus data ready in the appended format.
-    surplus_worksheet.append_row(surplus_data)
+    # Adds the data to the worksheet
+    surplus_worksheet.append_row(data)
     print("Surplus worksheet updated successfully.\n")
 
 def calculate_surplus_data(sales_row):
