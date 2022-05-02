@@ -81,6 +81,9 @@ def validate_data(values):
 
 # For this function to work, I need to pass it the data  to insert, so we’ll name this parameter data.  
 def update_sales_worksheet(data):
+    """
+    Update sales worksheet, add new row with the list data provided
+    """
 
     print("Updating sales worksheet...\n")
     # Need to access our sales  worksheet from our Google Sheet so we can add data to it.
@@ -89,6 +92,20 @@ def update_sales_worksheet(data):
     sales_worksheet = SHEET.worksheet("sales")
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully.\n")
+
+# For this function to work, I need to pass it the surplus_data  to insert, so we’ll name this parameter.  
+def update_surplus_worksheet(surplus_data):
+    """
+    Update surplus worksheet, add new row with the list data provided
+    """
+    print("Updating surplus worksheet...\n")
+    # Need to access our surplus worksheet from our Google Sheet so we can add data to it.
+    # Use the gspread worksheet() method to access our surplus worksheet.  
+    # The value we put in here relates to the name of our worksheet tab.
+    surplus_worksheet = SHEET.worksheet("surplus")
+    # Gets the new surplus data ready in the appended format.
+    surplus_worksheet.append_row(surplus_data)
+    print("Surplus worksheet updated successfully.\n")
 
 def calculate_surplus_data(sales_row):
     """
@@ -101,17 +118,17 @@ def calculate_surplus_data(sales_row):
     stock = SHEET.worksheet("stock").get_all_values()
     # Using the slice function wrapped in square brackets to say it's a list we want.
     stock_row = stock[-1]
-    #print(stock_row)
+    # print(stock_row)
 
     # an empty surplus_data list where new calculated list will go.
     surplus_data = []
     # for loop to go through the two list rows and calculate the surplus.
     for stock, sales in zip(stock_row, sales_row):
         surplus = int(stock) - sales
-        # inside our for loop we can append  our surplus calculation into it.
+        # inside our for loop we can append our surplus calculation into it.
         surplus_data.append(surplus)
     # new calculated surplus_data
-    return surplus_data 
+    return surplus_data
 
 def main():
     """
@@ -128,8 +145,10 @@ def main():
     
     # Calling the "calculate_surplus_data" function to calculate NEW surplus data
     new_surplus_data = calculate_surplus_data(sales_data)
-    
-    print(new_surplus_data)
+
+    # Calling the "update_surplus_worksheet" function.
+    update_surplus_worksheet(new_surplus_data)
+
 print("Welcome to Love Sandwiches Data Automation.\n")
 main()
 
