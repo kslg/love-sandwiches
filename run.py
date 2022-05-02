@@ -64,7 +64,7 @@ def validate_data(values):
     details of the error triggered by the code in our  try statement here, and by using the as keyword,  
     we're assigning that ValueError object to the e variable, which is standard Python shorthand for “error”.
    
-    Use List Comprehension to convert strings into integers:
+    (line 71) Use List Comprehension to convert strings into integers:
     For each individual value in the values list, convert that value into an integer.
     """
     try:
@@ -101,7 +101,17 @@ def calculate_surplus_data(sales_row):
     stock = SHEET.worksheet("stock").get_all_values()
     # Using the slice function wrapped in square brackets to say it's a list we want.
     stock_row = stock[-1]
-    print(stock_row)
+    #print(stock_row)
+
+    # an empty surplus_data list where new calculated list will go.
+    surplus_data = []
+    # for loop to go through the two list rows and calculate the surplus.
+    for stock, sales in zip(stock_row, sales_row):
+        surplus = int(stock) - sales
+        # inside our for loop we can append  our surplus calculation into it.
+        surplus_data.append(surplus)
+    # new calculated surplus_data
+    return surplus_data 
 
 def main():
     """
@@ -116,9 +126,10 @@ def main():
     # Calling the "update_sales_worksheet" function.
     update_sales_worksheet(sales_data)
     
-    # Calling the "calculate_surplus_data" function.
-    calculate_surplus_data(sales_data)
-
+    # Calling the "calculate_surplus_data" function to calculate NEW surplus data
+    new_surplus_data = calculate_surplus_data(sales_data)
+    
+    print(new_surplus_data)
 print("Welcome to Love Sandwiches Data Automation.\n")
 main()
 
