@@ -65,7 +65,7 @@ def validate_data(values):
     we're assigning that ValueError object to the e variable, which is standard Python shorthand for “error”.
    
     Use List Comprehension to convert strings into integers:
-    For each individual value in the values  list, convert that value into an integer.
+    For each individual value in the values list, convert that value into an integer.
     """
     try:
         [int(value) for value in values]
@@ -90,12 +90,35 @@ def update_sales_worksheet(data):
     sales_worksheet.append_row(data)
     print("Sales worksheet updated successfully.\n")
 
+def calculate_surplus_data(sales_row):
+    """
+    Compare sales with stock and calculate the surplus for each item type.
+    The surplus is defined as the sales figure subtracted from the stock:
+    - Positive surplus indicates waste
+    - Negative surplus indicates extra made when stock was sold out.
+    """
+    print("Calculating surplus data...\n")
+    stock = SHEET.worksheet("stock").get_all_values()
+    # Using the slice function wrapped in square brackets to say it's a list we want.
+    stock_row = stock[-1]
+    print(stock_row)
 
-# Calling the "get_sales_data" function.
-data = get_sales_data()
+def main():
+    """
+    It's common practice to wrap the main function calls of a program within a function called "main".   
+    """
+    # Calling the "get_sales_data" function.
+    data = get_sales_data()
 
-# Using List Comprehension, converting the data into integer format.
-sales_data = [int(num) for num in data]
+    # Using List Comprehension, converting the data into integer format.
+    sales_data = [int(num) for num in data]
 
-# Calling the "update_sales_worksheet" function.
-update_sales_worksheet(sales_data)
+    # Calling the "update_sales_worksheet" function.
+    update_sales_worksheet(sales_data)
+    
+    # Calling the "calculate_surplus_data" function.
+    calculate_surplus_data(sales_data)
+
+print("Welcome to Love Sandwiches Data Automation.\n")
+main()
+
