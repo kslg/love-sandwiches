@@ -150,6 +150,29 @@ def calculate_surplus_data(sales_row):
     # new calculated surplus_data
     return surplus_data
 
+def get_last_5_entries_sales():
+    """
+    Collects columns of data from sales worksheet, collecting
+    the last 5 entries for each sandwich and returns the data
+    as a list of lists.
+    """
+    sales = SHEET.worksheet("sales")
+    # create a new empty list called columns.
+    columns = []
+    # Use a for loop and use the value of the loop index to access each column of data in turn.  
+    for ind in range(1, 7):
+        # We can access a single column  by using the col_values() method provided by gspread
+        # create a column variable  
+        # to store the column inside our for loop just  like we did in this commented out code here.  
+        # And we’ll use the col_values() method on the  sales variable, and pass it our ind variable.     
+        column = sales.col_values(ind)
+        # Now we’ll append our column  list to our columns list.
+        # This time we want the last 5 items, so we can use -5 here inside our append method.
+        # And we need a colon here, because  we want to slice multiple values from the list. 
+        # Now we should get a list of  lists, each with 5 entries in it.  
+        columns.append(column[-5:])
+    return columns
+
 def main():
     """
     It's common practice to wrap the main function calls of a program within a function called "main".   
@@ -172,5 +195,5 @@ def main():
     update_worksheet(new_surplus_data, "surplus")
 
 print("Welcome to Love Sandwiches Data Automation.\n")
-main()
-
+#main()
+sales_colums = get_last_5_entries_sales()
