@@ -173,6 +173,23 @@ def get_last_5_entries_sales():
         columns.append(column[-5:])
     return columns
 
+def calculate_stock_data(data):
+    """
+    Calculate the average stock for each item type, adding 10%
+    """
+    print("Calculating stock data...\n")
+    # new list
+    new_stock_data = []
+
+    for column in data:
+        int_column = [int(num) for num in column]
+        average = sum(int_column) / len(int_column)
+        # Average mutiplied by 10%
+        stock_num = average * 1.1
+        # Append new stock data and round up the values
+        new_stock_data.append(round(stock_num))
+    return new_stock_data
+
 def main():
     """
     It's common practice to wrap the main function calls of a program within a function called "main".   
@@ -194,6 +211,10 @@ def main():
     # and askng to update the "surplus" worksheet
     update_worksheet(new_surplus_data, "surplus")
 
+    sales_colums = get_last_5_entries_sales()
+    stock_data = calculate_stock_data(sales_colums)
+    update_worksheet(stock_data, "stock")
+
 print("Welcome to Love Sandwiches Data Automation.\n")
-#main()
-sales_colums = get_last_5_entries_sales()
+main()
+
